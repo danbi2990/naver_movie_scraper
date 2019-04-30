@@ -7,7 +7,7 @@ from pprint import pprint
 
 
 normalize_pattern = re.compile('[\r\n\t]')
-doublespcae_pattern = re.compile('[\s]+')
+doublespace_pattern = re.compile('[\s]+')
 
 
 def get_soup(url):
@@ -52,7 +52,7 @@ def text_normalize(s):
     s = s.replace('&nbsp;', ' ')
     s = s.replace('\xa0', ' ')
     s = normalize_pattern.sub(' ', s)
-    s = doublespcae_pattern.sub(' ', s)
+    s = doublespace_pattern.sub(' ', s)
     return s.strip()
 
 

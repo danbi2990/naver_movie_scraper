@@ -4,7 +4,7 @@ import time
 
 from naver_movie_scraper import scrap_basic
 from naver_movie_scraper import scrap_casting
-from naver_movie_scraper import scrap_bestscript
+from naver_movie_scraper import scrap_bestscripts
 from naver_movie_scraper import scrap_comments
 from naver_movie_scraper import save_list_of_dict
 from naver_movie_scraper import save_json
@@ -25,7 +25,7 @@ def scrap(idx, directory, casting=True, bestscripts=True, comments=True, limit=3
 
     # best scripts
     if bestscripts:
-        scripts = scrap_bestscript(idx, limit, sleep)
+        scripts = scrap_bestscripts(idx, limit, sleep)
         if scripts:
             save_list_of_dict(scripts, '{}/bestscripts/{}'.format(directory, idx))
         print('scraped {} best scripts'.format(idx))

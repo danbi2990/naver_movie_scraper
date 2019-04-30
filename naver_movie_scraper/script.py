@@ -23,12 +23,15 @@ def scrap_from_a_page(soup):
     for script in soup.select('ul[class=lines] li div[class=lines_area2]'):
         try:
             text = text_normalize(script.select('p[class=one_line]')[0].text)
-            character = text_normalize(script.select('p[class=char_part]')[0].text)
+            # character = text_normalize(script.select('p[class=char_part]')[0].text)
+            character = text_normalize(script.select('.char_part span')[0].text)
+            actor = text_normalize(script.select('.char_part a')[0].text)
             description = text_normalize(script.select('p[class=line_desc]')[0].text)
             agree = int(script.select('span[class=w_recomm] em')[-1].text)
             scripts.append(
                 {'text': text,
                  'chracter': character,
+                 'actor': actor,
                  'description': description,
                  'num_agree': agree
                 })

@@ -22,29 +22,32 @@ def _scrap_comments(idx, limit, after, sleep=0.05):
     comments = []
     for p in range(1, max_page + 1):
         url = comments_url_form.format(idx, 'after' if after else 'before', p)
-        comments += parse_a_page(get_soup(url))
+        comments += parse_a_page(get_soup(url), after_strf)
         if p % 20 == 0:
             print('\r  movie {}, {}, {} / {} ...'.format(idx, after_strf, p, max_page), end='')
     print('\r  movie {}, {}, {} / {} done'.format(idx, after_strf, p, max_page))
     return comments
 
-def parse_a_page(soup):
+def parse_a_page(soup, after_strf):
     comments = []
     for row in soup.select('div[class=score_result] li'):
         try:
             score = int(row.select('div[class=star_score] em')[0].text.strip())
             text = row.select('div[class=score_reple] p')[0].text.strip()
             user = row.select('a[onclick^=javascript]')[0].attrs.get('onclick', '').split('(')[1].split(',')[0]
+            nickname = row.select('a[onclick^=javascript]')[0].text.strip()
             written_at = re.search(r"\d+\.\d+\.\d+ \d+:\d+", row.text).group()
             agree = int(row.select('span[class^=sympathy]')[0].text.strip())
             disagree = int(row.select('span[class^=notSympathy]')[0].text)
             comments.append(
-                {'score': score,
+                {'type': after_strf,
+                 'score': score,
                  'text': text,
                  'user': user,
+                 'nickname': nickname,
                  'written_at': written_at,
                  'agree': agree,
-                 'disagree': disagree
+                 'disagree': disagree,
                 })
         except:
             continue

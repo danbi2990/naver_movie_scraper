@@ -50,7 +50,7 @@ def e_title(soup):
 def genres(soup):
     genres = soup.select('a[href^=/movie/sdb/browsing/bmovie.nhn?genre=]')
     return list({genre.text for genre in genres})
-    
+
 def countries(soup):
     countries = soup.select('a[href^=/movie/sdb/browsing/bmovie.nhn?nation=]')
     return list({country.text for country in countries})
@@ -68,7 +68,7 @@ def open_date(soup):
         for a in links if 'bmovie.nhn?open=' in a.attrs.get('href', '')]
     dates = ['{}-{}-{}'.format(d[:4], d[4:6], d[6:]) for d in dates if len(d) == 8]
     return dates
-    
+
 def grade(soup):
     a = soup.select('a[href^=/movie/sdb/browsing/bmovie.nhn?grade]')
     if not a:
